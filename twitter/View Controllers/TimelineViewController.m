@@ -8,8 +8,13 @@
 
 #import "TimelineViewController.h"
 #import "APIManager.h"
+#import "TweetCellTableViewCell.h"
+#import "UIImageView+AFNetworking.h"
 
-@interface TimelineViewController ()
+
+@interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, strong) NSMutableArray *tweets;
 
 @end
 
@@ -18,14 +23,17 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.timeline_tableView.delegate = self;
+    self.timeline_tableView.dataSource = self;
+    self.timeline_tableView.rowHeight = 150;
+    
     // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
-        if (tweets) {
+  [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+       if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (NSDictionary *dictionary in tweets) {
-                NSString *text = dictionary[@"text"];
-                NSLog(@"%@", text);
-            }
+            self.tweets = [NSMutableArray arrayWithArray:tweets];
+            NSLog(@"%@", self.tweets);
+            [self.timeline_tableView reloadData];
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
@@ -46,6 +54,20 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+
+- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
+    TweetCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
+    Tweet *tweet = self.tweets[indexPath.row];
+    //cell.tweet = tweet;
+    [cell setTweet:tweet];
+    
+    return cell;
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.tweets.count;
+}
 
 
 @end
