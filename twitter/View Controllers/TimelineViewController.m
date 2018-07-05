@@ -15,6 +15,7 @@
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) NSMutableArray *tweets;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end
 
@@ -27,17 +28,28 @@
     self.timeline_tableView.dataSource = self;
     self.timeline_tableView.rowHeight = 150;
     
+    [self fetchTimeline];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(fetchTimeline) forControlEvents:UIControlEventValueChanged];
+    [self.timeline_tableView insertSubview:self.refreshControl atIndex:0];
+}
+
+-(void)fetchTimeline {
     // Get timeline
-  [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
-       if (tweets) {
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+        if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             self.tweets = [NSMutableArray arrayWithArray:tweets];
-            NSLog(@"%@", self.tweets);
             [self.timeline_tableView reloadData];
+            
+            // Tell refreshControl to stop spinning
+            [self.refreshControl endRefreshing];
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
     }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
