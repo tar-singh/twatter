@@ -45,8 +45,21 @@
         // Convert String to Date
         NSDate *date = [formatter dateFromString:createdAtOriginalString];
         
-        // Convert Date to String
-        self.createdAtString = [NSString stringWithFormat:@"%@", date.shortTimeAgoSinceNow];
+        NSDate *now = [NSDate date];
+        
+        BOOL sameWeek = [[NSCalendar currentCalendar] isDate:date equalToDate:now toUnitGranularity:NSCalendarUnitWeekOfYear];
+        
+        if(sameWeek){
+            // Convert Date to String
+            self.createdAtString = [NSString stringWithFormat:@"%@", date.shortTimeAgoSinceNow];
+        }
+        else {
+            // Configure output format
+            formatter.dateStyle = NSDateFormatterShortStyle;
+            formatter.timeStyle = NSDateFormatterNoStyle;
+            // Convert Date to String
+            self.createdAtString = [formatter stringFromDate:date];
+        }
     }
     return self;
 }

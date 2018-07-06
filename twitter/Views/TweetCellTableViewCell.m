@@ -25,7 +25,6 @@
     self.firstLast_label.text = self.tweet.user.name;
     self.handle_label.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screen_name];
     self.date_label.text = self.tweet.createdAtString;
-    
     self.tweet_label.text = self.tweet.text;
     self.retweet_label.text = [NSString stringWithFormat:@"%i", self.tweet.retweetCount];
     self.fav_label.text = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
