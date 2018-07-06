@@ -37,6 +37,7 @@
         self.user = [[User alloc] initWithDictionary:user];
         
         // TODO: Format and set createdAtString
+        NSString *smolboidot = @"· ";
         // Format createdAt date string
         NSString *createdAtOriginalString = dictionary[@"created_at"];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -45,20 +46,23 @@
         // Convert String to Date
         NSDate *date = [formatter dateFromString:createdAtOriginalString];
         
+        // if date is over a week ago, will display date instead of timestamp
         NSDate *now = [NSDate date];
         
         BOOL sameWeek = [[NSCalendar currentCalendar] isDate:date equalToDate:now toUnitGranularity:NSCalendarUnitWeekOfYear];
         
         if(sameWeek){
             // Convert Date to String
-            self.createdAtString = [NSString stringWithFormat:@"%@", date.shortTimeAgoSinceNow];
+            NSString *finalDate = [NSString stringWithFormat:@"%@", date.shortTimeAgoSinceNow];
+            self.createdAtString = [smolboidot stringByAppendingString:finalDate];
         }
         else {
             // Configure output format
             formatter.dateStyle = NSDateFormatterShortStyle;
             formatter.timeStyle = NSDateFormatterNoStyle;
+            NSString *finalDate = [formatter stringFromDate:date];;
             // Convert Date to String
-            self.createdAtString = [formatter stringFromDate:date];
+            self.createdAtString = [smolboidot stringByAppendingString:finalDate];
         }
     }
     return self;
