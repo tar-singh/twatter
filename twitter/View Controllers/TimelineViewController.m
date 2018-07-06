@@ -12,6 +12,8 @@
 #import "UIImageView+AFNetworking.h"
 #import "TweetCellTableViewCell.h"
 #import "ComposeViewController.h"
+#import "AppDelegate.h"
+#import "LoginViewController.h"
 
 
 @interface TimelineViewController () <UITableViewDelegate, UITableViewDataSource, ComposeViewControllerDelegate>
@@ -74,7 +76,22 @@
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     TweetCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell"];
     Tweet *tweet = self.tweets[indexPath.row];
-    //cell.tweet = tweet;
+    
+    // since cells are dequeueueueed, need to make sure that
+    // the selection of heart/RT buttons aren't also repeated
+    if (!tweet.favorited){
+        cell.heartButton.selected = NO;
+    }
+    else {
+        cell.heartButton.selected = YES;
+    }
+    
+    if (!tweet.retweeted){
+        cell.retweetButton.selected = NO;
+    }
+    else {
+        cell.retweetButton.selected = YES;
+    }
     [cell setTweet:tweet];
     
     return cell;
@@ -88,6 +105,16 @@
 - (void)didTweet:(Tweet *)tweet {
     [self.tweets insertObject:tweet atIndex:0];
     [self.timeline_tableView reloadData];
+}
+
+- (IBAction)didLogout:(id)sender {
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    
+    [[APIManager shared] logout];
 }
 
 

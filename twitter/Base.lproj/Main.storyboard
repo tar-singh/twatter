@@ -108,23 +108,15 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="retweet-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Qae-Wa-yI9">
-                                                    <rect key="frame" x="135" y="120" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
-                                                <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" insetsLayoutMarginsFromSafeArea="NO" image="favor-icon" translatesAutoresizingMaskIntoConstraints="NO" id="EHH-ML-TrZ">
-                                                    <rect key="frame" x="231" y="118" width="30" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0o-LK-lwz">
-                                                    <rect key="frame" x="260" y="124" width="10" height="21"/>
+                                                    <rect key="frame" x="260" y="124" width="68" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B3S-GX-Hs8">
-                                                    <rect key="frame" x="166" y="124" width="10" height="21"/>
+                                                    <rect key="frame" x="167" y="124" width="60" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -134,16 +126,34 @@
                                                     <rect key="frame" x="15" y="11" width="65" height="65"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wRx-cO-KGq">
+                                                    <rect key="frame" x="137" y="120" width="28" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button" image="retweet-icon"/>
+                                                    <state key="selected" image="retweet-icon-green"/>
+                                                    <connections>
+                                                        <action selector="didTapRT:" destination="7I0-U4-eQk" eventType="touchUpInside" id="zn5-de-bSo"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pp8-Iv-xT7">
+                                                    <rect key="frame" x="230" y="118" width="29" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button" image="favor-icon"/>
+                                                    <state key="selected" image="favor-icon-red"/>
+                                                    <connections>
+                                                        <action selector="didTapFav:" destination="7I0-U4-eQk" eventType="touchUpInside" id="qUY-9V-bPa"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="date_label" destination="Krv-43-Dxv" id="rEf-yg-ayc"/>
-                                            <outlet property="fav_img" destination="EHH-ML-TrZ" id="uKO-OO-A7I"/>
                                             <outlet property="fav_label" destination="L0o-LK-lwz" id="Fps-hn-451"/>
                                             <outlet property="firstLast_label" destination="0nm-lD-H8h" id="m3e-Fw-tjz"/>
                                             <outlet property="handle_label" destination="jtq-PR-ydR" id="4wD-0p-2ze"/>
+                                            <outlet property="heartButton" destination="pp8-Iv-xT7" id="B3E-0e-Alz"/>
                                             <outlet property="image_view" destination="B91-W7-3a4" id="n6U-XI-V1P"/>
-                                            <outlet property="retweet_img" destination="Qae-Wa-yI9" id="jBq-Ze-jnB"/>
+                                            <outlet property="retweetButton" destination="wRx-cO-KGq" id="uH2-9P-30G"/>
                                             <outlet property="retweet_label" destination="B3S-GX-Hs8" id="PPb-zT-Ory"/>
                                             <outlet property="tweet_label" destination="bRV-AT-Kc2" id="Gsb-nL-hcT"/>
                                         </connections>
@@ -155,6 +165,11 @@
                         <viewLayoutGuide key="safeArea" id="ugE-Ul-H9I"/>
                     </view>
                     <navigationItem key="navigationItem" title="Home Timeline" id="MOc-fV-EZE">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="WQw-ni-051">
+                            <connections>
+                                <action selector="didLogout:" destination="Lbl-k5-U4i" id="oCp-vY-9Lq"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" image="edit-icon" id="GYv-dK-vC9">
                             <connections>
                                 <segue destination="BKx-ul-PFA" kind="presentation" id="r02-Hg-NPE"/>
@@ -252,6 +267,8 @@
         <image name="close-icon" width="26" height="24"/>
         <image name="edit-icon" width="30" height="27"/>
         <image name="favor-icon" width="30" height="30"/>
+        <image name="favor-icon-red" width="30" height="30"/>
         <image name="retweet-icon" width="30" height="30"/>
+        <image name="retweet-icon-green" width="30" height="30"/>
     </resources>
 </document>

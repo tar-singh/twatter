@@ -19,12 +19,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *handle_label;
 @property (weak, nonatomic) IBOutlet UILabel *date_label;
 @property (weak, nonatomic) IBOutlet UILabel *tweet_label;
-@property (weak, nonatomic) IBOutlet UIImageView *retweet_img;
 @property (weak, nonatomic) IBOutlet UILabel *retweet_label;
-@property (weak, nonatomic) IBOutlet UIImageView *fav_img;
 @property (weak, nonatomic) IBOutlet UILabel *fav_label;
-@property (weak, nonatomic) IBOutlet UIImageView *msg_img;
-
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *heartButton;
 @property (strong, nonatomic) Tweet *tweet;
 
 @property (nonatomic, weak) id<TweetCellDelegate> delegate;
