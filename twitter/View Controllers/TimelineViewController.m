@@ -30,7 +30,7 @@
     
     self.timeline_tableView.delegate = self;
     self.timeline_tableView.dataSource = self;
-    self.timeline_tableView.rowHeight = 150;
+    self.timeline_tableView.rowHeight = UITableViewAutomaticDimension;
     
     [self fetchTimeline];
     

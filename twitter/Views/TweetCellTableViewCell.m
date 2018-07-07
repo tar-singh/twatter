@@ -26,22 +26,42 @@
     self.handle_label.text = [NSString stringWithFormat:@"@%@", self.tweet.user.screen_name];
     self.date_label.text = self.tweet.createdAtString;
     self.tweet_label.text = self.tweet.text;
-    self.retweet_label.text = [NSString stringWithFormat:@"%i", self.tweet.retweetCount];
-    self.fav_label.text = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
-    
+    [self k];
     self.image_view.image = nil;
     if (tweet.user.profile_URL != nil){
         [self.image_view setImageWithURL:self.tweet.user.profile_URL];
     }
     
 }
+
+-(void) k{
+    if (self.tweet.retweetCount > 1000){
+        NSLog(@"greater than 1000");
+        double rounded = ((float) self.tweet.retweetCount) / 1000;
+        self.retweet_label.text = [NSString stringWithFormat:@"%.1fk", rounded];
+    }
+    else{
+        self.retweet_label.text = [NSString stringWithFormat:@"%i", self.tweet.retweetCount];
+    }
+    
+    if (self.tweet.favoriteCount > 1000){
+        NSLog(@"greater than 1000");
+        double rounded = ((float) self.tweet.favoriteCount) / 1000;
+        self.fav_label.text = [NSString stringWithFormat:@"%.1fk", rounded];
+    }
+    else{
+        self.fav_label.text = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
+    }
+}
+
+
 - (IBAction)didTapFav:(id)sender {
     if (self.tweet.favorited != YES){
         self.tweet.favorited = YES;
         self.tweet.favoriteCount += 1;
         
         self.heartButton.selected = YES;
-        self.fav_label.text = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
+        [self k];
         
         [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error)
@@ -58,7 +78,7 @@
         self.tweet.favoriteCount -= 1;
         
         self.heartButton.selected = NO;
-        self.fav_label.text = [NSString stringWithFormat:@"%i", self.tweet.favoriteCount];
+        [self k];
         
         [[APIManager shared] unfavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
@@ -78,7 +98,7 @@
         self.tweet.retweetCount += 1;
         
         self.retweetButton.selected = YES;
-        self.retweet_label.text = [NSString stringWithFormat:@"%i", self.tweet.retweetCount];
+        [self k];
         
         [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error)
@@ -96,7 +116,7 @@
         self.tweet.retweetCount -= 1;
         
         self.retweetButton.selected = NO;
-        self.retweet_label.text = [NSString stringWithFormat:@"%i", self.tweet.retweetCount];
+        [self k];
         
         [[APIManager shared] unretweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error)
